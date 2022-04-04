@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: Custom Function example
 
 Resources:
-  Fn:
+  Fn1:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
@@ -17,7 +17,91 @@ Resources:
         Variables:
           DEBUG: '*'
 
-  Cfn:
-    Type: Custom::Cfn
+  Cfn1:
+    Type: Custom::Cfn1
     Properties:
-      ServiceToken: !GetAtt Fn.Arn
+      ServiceToken: !GetAtt Fn1.Arn
+
+
+  Fn2:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Description: Custom function 2
+      Timeout: 90
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      InlineCode: |
+        const cfn_response = require('cfn-response');
+
+        exports.handler = (event, context) => {
+        	try {
+        		console.log('Event', event.RequestType, event.StackId, event.RequestId, event.LogicalResourceId);
+
+        		switch (event.RequestType) {
+        			case 'Create':
+        				console.log(`Creating was called`);
+        				cfn_response.send(event, context, cfn_response.SUCCESS, {});
+        				break;
+        			case 'Update':
+        				console.log(`Update was called`);
+        				cfn_response.send(event, context, cfn_response.SUCCESS, {});
+        				break;
+        			case 'Delete':
+        				console.log(`Delete was called`);
+        				cfn_response.send(event, context, cfn_response.SUCCESS, {});
+        				break;
+        			default:
+        				cfn_response.send(event, context, cfn_response.FAILED, {});
+        				break;
+        		}
+        	} catch (err) {
+        		console.error(err);
+        		cfn_response.send(event, context, cfn_response.FAILED, {});
+        	}
+        };
+
+  Cfn2:
+    Type: Custom::Cfn2
+    Properties:
+      ServiceToken: !GetAtt Fn2.Arn
+
+
+  Fn3:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index-async.handler
+      Runtime: nodejs12.x
+      CodeUri: ./cfn
+      Description: Custom function
+      Timeout: 90
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          DEBUG: '*'
+
+  Cfn3:
+    Type: Custom::Cfn3
+    Properties:
+      ServiceToken: !GetAtt Fn3.Arn
+
+  Fn4:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index-es.handler
+      Runtime: nodejs14.x
+      CodeUri: ./cfn
+      Description: Custom function
+      Timeout: 90
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          DEBUG: '*'
+
+  Cfn4:
+    Type: Custom::Cfn4
+    Properties:
+      ServiceToken: !GetAtt Fn4.Arn

@@ -1,7 +1,7 @@
-const cfn_response = require('cfn-response');
+const cfn_response = require('cfn-response-async');
 const debug = require("debug")('beameio:cfn');
 
-exports.handler = (event, context) => {
+exports.handler = async (event, context) => {
 	try {
 		debug('Event', event.RequestType, event.StackId, event.RequestId, event.LogicalResourceId);
 
@@ -16,12 +16,12 @@ exports.handler = (event, context) => {
 				debug(`Delete was called`);
 				break;
 			default:
-				cfn_response.send(event, context, cfn_response.FAILED, {});
+				await cfn_response.send(event, context, cfn_response.FAILED, {});
 				break;
 		}
-		cfn_response.send(event, context, cfn_response.SUCCESS, {});
+		await cfn_response.send(event, context, cfn_response.SUCCESS, {});
 	} catch (err) {
 		console.error(err);
-		cfn_response.send(event, context, cfn_response.FAILED, {});
+		await cfn_response.send(event, context, cfn_response.FAILED, {});
 	}
 };
