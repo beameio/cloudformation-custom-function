@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Custom Function example
+
+Resources:
+  Fn:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs12.x
+      CodeUri: ./cfn
+      Description: Custom function
+      Timeout: 90
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          DEBUG: '*'
+
+  Cfn:
+    Type: Custom::Cfn
+    Properties:
+      ServiceToken: !GetAtt Fn.Arn
