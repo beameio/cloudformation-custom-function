@@ -9,7 +9,7 @@ Resources:
       Handler: index.handler
       Runtime: nodejs12.x
       CodeUri: ./cfn
-      Description: Custom function
+      Description: Custom function 1
       Timeout: 90
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -74,7 +74,7 @@ Resources:
       Handler: index-async.handler
       Runtime: nodejs12.x
       CodeUri: ./cfn
-      Description: Custom function
+      Description: Custom function 3
       Timeout: 90
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -93,7 +93,7 @@ Resources:
       Handler: index-es.handler
       Runtime: nodejs14.x
       CodeUri: ./cfn
-      Description: Custom function
+      Description: Custom function 4
       Timeout: 90
       Policies:
         - AWSLambdaBasicExecutionRole
