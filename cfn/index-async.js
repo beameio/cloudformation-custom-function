@@ -3,7 +3,7 @@ const debug = require("debug")('beameio:cfn');
 
 exports.handler = async (event, context) => {
 	try {
-		debug('Event', event.RequestType, event.StackId, event.RequestId, event.LogicalResourceId);
+		debug('Event %o', event);
 
 		switch (event.RequestType) {
 			case 'Create':

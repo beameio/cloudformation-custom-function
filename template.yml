@@ -37,7 +37,7 @@ Resources:
 
         exports.handler = (event, context) => {
         	try {
-        		console.log('Event', event.RequestType, event.StackId, event.RequestId, event.LogicalResourceId);
+        		console.log('Event', event.ResponseURL, event.RequestType, event.StackId, event.RequestId, event.LogicalResourceId);
 
         		switch (event.RequestType) {
         			case 'Create':
